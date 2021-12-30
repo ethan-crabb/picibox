@@ -7,11 +7,14 @@ import RandomAvatar from '../Components/RandomAvatar'
 import { toast } from 'react-toastify';
 import { createGame } from '../Helpers/create-game'
 import { GameContext } from '../Helpers/game'
+import Nav from '../Helpers/Nav'
+import { useNavigate } from 'react-router'
 
 export default function Create() {
     const gameInstance = useContext(GameContext)
     const socket = gameInstance.socket
     const [timeAprox, setTimeAprox] = useState(0)
+    const navigate = useNavigate()
     const SettingsContainer = (props) => {
         return (
             <div style={{ flex: 1, paddingRight: 10, lineHeight: 1.2 }}>
@@ -28,6 +31,7 @@ export default function Create() {
                         icon: "✔️",
                         hideProgressBar: true
                     })
+                    Nav(navigate, `/lobby/${responce.data}`)
                 }, 500)
             }, 1000)
         })

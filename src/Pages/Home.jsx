@@ -32,9 +32,8 @@ export default function Home() {
                         hideProgressBar: true
                     })
                 } else {
-                    gameInstance.update({ code: responce.data }, () => {
-                        Nav(navigate, "/lobby")
-                    })
+                    // gameInstance.update({ code: responce.data })
+                    Nav(navigate, `/lobby/${responce.data}`)
                 }
             }, 200)
         })

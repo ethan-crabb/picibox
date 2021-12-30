@@ -8,33 +8,27 @@ import 'react-toastify/dist/ReactToastify.css';
 import Create from './Pages/Create';
 import { GameContext } from './Helpers/game';
 import Lobby from './Pages/Lobby';
+import Game from './Pages/Game';
 const io = require("socket.io-client");
 const socket = io("ws://localhost:8888")
 
 function App() {
-    let updateCallback = () => void 0
     const [game, setGame] = useState({
         code: null,
         socket: socket,
         avatar: null,
-        update: (newVal, cb) => { updateCallback = cb || function x() { void 0 }; setGame({ ...game, ...newVal }) }
+        update: (newVal) => { setGame({ ...game, ...newVal }) }
     })
     useEffect(() => {
         socket.on("connect", () => {
             console.log("Connected to the game server!")
         })
     }, [])
-    useEffect(() => {
-        updateCallback()
-        updateCallback = () => void 0
-        console.log("Updated game to:", game)
-    }, [game])
     if (game.socket !== null) {
-        console.log("Loading home !!")
         return (
             <GameContext.Provider value={game}>
                 <div className='full flex aic jcc'>
-                    <div style={{ width: 1024, height: 682, padding: 50 }}>
+                    <div style={{ width: 1024, height: 650}} className="flex aic jcc">
                         <Router>
                             <ToastContainer
                                 position="bottom-center"
@@ -46,11 +40,13 @@ function App() {
                                 draggable
                                 pauseOnHover
                                 progressStyle={{ backgroundColor: "#00B2FF" }}
+                                hideProgressBar={true}
                             />
                             <Routes>
                                 <Route path="/" element={<Home />} />
                                 <Route path="/create" element={<Create />} />
-                                <Route path="/lobby" element={<Lobby />} />
+                                <Route path="/lobby/:code" element={<Lobby />} />
+                                <Route path="/game/:code" element={<Game />} />
                             </Routes>
                         </Router>
                     </div>

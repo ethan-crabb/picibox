@@ -4,10 +4,9 @@ import { colourMap, fullColourMap, fileMap } from '../Helpers/avatar-bindings'
 import Fade from 'react-reveal/Fade'
 export default function RandomAvatar(props) {
     const gameInstance = useContext(GameContext)
-    console.log(gameInstance)
     const [selectedAvatar, setSelectedAvatar] = useState(null)
     const reGenerate = () => {
-        const generated = Math.floor(Math.random() * 6) + 1
+        const generated = selectedAvatar ? (selectedAvatar + 1 > 6 ? 1 : selectedAvatar + 1) : 1
         if (generated !== selectedAvatar) {
             setSelectedAvatar(generated)
             gameInstance.update({
@@ -19,7 +18,11 @@ export default function RandomAvatar(props) {
         }
     }
     useEffect(() => {
-        reGenerate()
+        if (!props.avatar) {
+            reGenerate()
+        } else {
+            setSelectedAvatar(props.avatar)
+        }
     }, [])
     return (
         <div onClick={() => {
@@ -28,7 +31,7 @@ export default function RandomAvatar(props) {
             }
         }} style={{ width: "fit-content", height: "fit-content", cursor: "pointer" }} className='flex aic jcc'>
             {selectedAvatar
-                ? <Fade><img style={{ boxShadow: `0px 0px 15px ${colourMap[selectedAvatar.toString()]}`, border: `5px solid ${fullColourMap[selectedAvatar.toString()]}` }} className='avatar' src={fileMap[selectedAvatar.toString()]} key={selectedAvatar.toString()} alt="" /></Fade>
+                ? <Fade><img style={{ boxShadow: `0px 0px 15px ${colourMap[selectedAvatar.toString()]}`, border: `5px solid ${fullColourMap[selectedAvatar.toString()]}`, width: props.size || 110, height: props.size || 110 }} className='avatar' src={fileMap[selectedAvatar.toString()]} key={selectedAvatar.toString()} alt="" /></Fade>
                 : null
             }
         </div>
