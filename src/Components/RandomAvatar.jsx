@@ -6,7 +6,7 @@ export default function RandomAvatar(props) {
     const gameInstance = useContext(GameContext)
     const [selectedAvatar, setSelectedAvatar] = useState(null)
     const reGenerate = () => {
-        const generated = selectedAvatar ? (selectedAvatar + 1 > 6 ? 1 : selectedAvatar + 1) : 1
+        const generated = selectedAvatar ? (selectedAvatar + 1 > 6 ? 1 : selectedAvatar + 1) : Math.floor(Math.random() * 6) + 1
         if (generated !== selectedAvatar) {
             setSelectedAvatar(generated)
             gameInstance.update({

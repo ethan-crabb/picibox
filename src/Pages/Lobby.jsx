@@ -100,11 +100,11 @@ export default function Lobby(props) {
     const ControlButtons = () => {
         return (
             <div className="flex aic jcc" style={{gap: 20, flex: 1}}>
-                <Button col="#FF3F3F" onClick={() => {
+                <Button size="large" col="#FF3F3F" onClick={() => {
                     window.location.replace("/")
                 }}>Leave Game</Button>
                 {isHost
-                    ? <Button col="#00FF85" onClick={() => {
+                    ? <Button size="large" col="#00FF85" onClick={() => {
                         startGame(code, lobby, socket)
                     }}>Start Game</Button>
                     : null
