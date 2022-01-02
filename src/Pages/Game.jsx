@@ -185,7 +185,11 @@ export default function Game() {
                 )
             }
         } else if (stage === 3) {
-
+            return (
+                <div>
+                    The game is over!
+                </div>
+            )
         }
     } else {
         return <Connecting />
