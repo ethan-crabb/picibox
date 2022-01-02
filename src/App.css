@@ -1,6 +1,7 @@
 html {
     transition: all .3s;
     overflow-x: hidden;
+    line-height: 23px;
 }
 * {
     font-family: 'Bungee',

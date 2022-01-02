@@ -13,7 +13,9 @@ import { useNavigate } from 'react-router'
 export default function Create() {
     const gameInstance = useContext(GameContext)
     const socket = gameInstance.socket
-    const [timeAprox, setTimeAprox] = useState(0)
+    const [maxPlayers, setMaxPlayers] = useState("")
+    const [timeAprox, setTimeAprox] = useState()
+    const [playerName, setPlayerName] = useState("")
     const navigate = useNavigate()
     const SettingsContainer = (props) => {
         return (
@@ -35,10 +37,17 @@ export default function Create() {
                 }, 500)
             }, 1000)
         })
+        document.getElementById("create-maxPlayers").focus()
     }, [])
     useEffect(() => {
         document.getElementById("create-rounds").focus()
     }, [timeAprox])
+    useEffect(() => {
+        document.getElementById("create-maxPlayers").focus()
+    }, [maxPlayers])
+    useEffect(() => {
+        document.getElementById("create-name").focus()
+    }, [playerName])
     return (
         <Container flex fill fdc aifs>
             <div style={{ padding: 50, paddingLeft: 0, height: "fit-content", gap: 30, fontSize: 30, lineHeight: 1.2 }} className='flex aic jcc'>
@@ -51,18 +60,16 @@ export default function Create() {
                         <h2>Game <br /> Settings</h2>
                         <br />
                         <br />
-                        <Input type="number" id="create-maxPlayers" placeholder="Max Players" />
+                        <Input value={maxPlayers} onChange={(e) => { setMaxPlayers(e.target.value) }} type="number" id="create-maxPlayers" placeholder="Max Players" />
                         <br />
-                        <Input value={timeAprox} onChange={(e) => {
-                            setTimeAprox(e.target.value)
-                        }} type="number" id="create-rounds" placeholder="Rounds" />
+                        <Input value={timeAprox} onChange={(e) => { setTimeAprox(e.target.value) }} type="number" id="create-rounds" placeholder="Rounds" />
                         <p id="createTimeAprox">About: {((parseInt(timeAprox) * 3) > 120 ? "> 2" : parseInt(timeAprox) * 3) || 0}  {(parseInt(timeAprox) * 3) > 120 ? "hours" : "minutes"}</p>
                     </SettingsContainer>
                     <SettingsContainer>
                         <h2>Your <br /> Settings</h2>
                         <br />
                         <br />
-                        <Input id="create-name" placeholder="Name" />
+                        <Input value={playerName} onChange={(e) => { setPlayerName(e.target.value) }} id="create-name" placeholder="Name" />
                     </SettingsContainer>
                     <div className="playGuide flex aic jcc fdc">
                         <div style={{ width: "100%", textAlign: "center" }}>
