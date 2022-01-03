@@ -9,6 +9,7 @@ import RandomAvatar from "../Components/RandomAvatar";
 import Connecting from '../Components/Connecting';
 import Button from '../Components/Button';
 import Container from '../Components/Container';
+import Review from './Review';
 
 export default function Game() {
     const navigate = useNavigate()
@@ -19,6 +20,7 @@ export default function Game() {
     const [lobby, setLobby] = useState(null)
     const [owner, setOwner] = useState(false)
     const [stage, setStage] = useState(1)
+    const [reviewData, setReviewData] = useState(null)
     const [submitedAnswer, setSubmitedAnswer] = useState(false)
     useEffect(() => {
         socket.emit("get-lobby", {
@@ -74,6 +76,7 @@ export default function Game() {
         })
         socket.on("review-game", (responce) => {
             setStage(3)
+            setReviewData(responce.data)
             console.log(responce.data)
         })
     }, [])
@@ -187,7 +190,7 @@ export default function Game() {
         } else if (stage === 3) {
             return (
                 <div>
-                    The game is over!
+                    <Review code={code} lobby={lobby} reviewData={reviewData} />
                 </div>
             )
         }

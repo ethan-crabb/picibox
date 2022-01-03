@@ -26,12 +26,16 @@ export default function RandomAvatar(props) {
     }, [])
     return (
         <div onClick={() => {
-            if (props.regen) {
-                reGenerate()
+            if (props.onClick) {
+                props.onClick()
+            } else {
+                if (props.regen) {
+                    reGenerate()
+                }
             }
         }} style={{ width: "fit-content", height: "fit-content", cursor: "pointer" }} className='flex aic jcc'>
             {selectedAvatar
-                ? <Fade><img style={{ boxShadow: `0px 0px 15px ${colourMap[selectedAvatar.toString()]}`, border: `5px solid ${fullColourMap[selectedAvatar.toString()]}`, width: props.size || 110, height: props.size || 110 }} className='avatar' src={fileMap[selectedAvatar.toString()]} key={selectedAvatar.toString()} alt="" /></Fade>
+                ? <Fade><img style={{ boxShadow: `0px 0px 15px ${colourMap[selectedAvatar.toString()]}`, border: `5px solid ${fullColourMap[selectedAvatar.toString()]}`, width: props.size || 110, height: props.size || 110 }} className='avatar' src={fileMap[selectedAvatar.toString()]} key={selectedAvatar.toString()} alt="Player avatar" /></Fade>
                 : null
             }
         </div>
