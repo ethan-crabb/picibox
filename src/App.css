@@ -109,6 +109,12 @@ p {
     object-fit: cover;
     border-radius: 50%;
 }
+.avatarContainer:active {
+    transform: scale(.9);
+}
+.avatarContainer {
+    transition: all .3s;
+}
 .aifs {
     align-items: flex-start;
 }
@@ -169,4 +175,8 @@ input[type=number] {
     width: 500px;
     height: 400px;
     background-color: transparent;
+}
+.playerGridDisabled {
+    opacity: .5;
+    cursor: default !important;
 }

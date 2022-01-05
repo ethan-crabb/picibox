@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router';
 import Home from './Pages/Home';
-import { ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Create from './Pages/Create';
 import { GameContext } from './Helpers/game';
@@ -22,13 +22,31 @@ function App() {
     useEffect(() => {
         socket.on("connect", () => {
             console.log("Connected to the game server!")
+            console.log(sessionStorage.getItem("token"))
+            socket.emit("log-on", {
+                id: sessionStorage.getItem("token")
+            })
+            socket.on("save-socket", (responce) => {
+                console.log("Saving socket to localstorage")
+                sessionStorage.setItem("token", responce.data)
+            })
+            socket.on("player-left", (responce) => {
+                toast.success(responce.data, {
+                    icon: "👋"
+                })
+            })
+            socket.on("server-error", (error) => {
+                toast.success(error.msg, {
+                    icon: "🚨"
+                })
+            })
         })
     }, [])
     if (game.socket !== null) {
         return (
             <GameContext.Provider value={game}>
                 <div className='full flex aic jcc'>
-                    <div style={{ width: 1024, height: 650}} className="flex aic jcc">
+                    <div style={{ width: 1024, height: 650 }} className="flex aic jcc">
                         <Router>
                             <ToastContainer
                                 position="bottom-center"

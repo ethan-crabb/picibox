@@ -9,6 +9,7 @@ import { createGame } from '../Helpers/create-game'
 import { GameContext } from '../Helpers/game'
 import Nav from '../Helpers/Nav'
 import { useNavigate } from 'react-router'
+import copy from 'copy-to-clipboard'
 
 export default function Create() {
     const gameInstance = useContext(GameContext)
@@ -26,16 +27,23 @@ export default function Create() {
     }
     useEffect(() => {
         socket.on("create-game", (responce) => {
-            setTimeout(() => {
-                toast.dismiss()
+            if (responce.error) {
+                toast.success(responce.msg, {
+                    icon: "❗"
+                })
+            } else {
+                copy(responce.data)
                 setTimeout(() => {
-                    toast.success("Game Created!", {
-                        icon: "✔️",
-                        hideProgressBar: true
-                    })
-                    Nav(navigate, `/lobby/${responce.data}`)
-                }, 500)
-            }, 1000)
+                    toast.dismiss()
+                    setTimeout(() => {
+                        toast.success("Code copied!", {
+                            icon: "✔️",
+                            hideProgressBar: true
+                        })
+                        Nav(navigate, `/lobby/${responce.data}`)
+                    }, 500)
+                }, 1000)
+            }
         })
         document.getElementById("create-maxPlayers").focus()
     }, [])
@@ -83,11 +91,18 @@ export default function Create() {
                         </ul>
                     </div>
                 </div>
-                <Button onClick={() => {
-                    createGame("create-maxPlayers", "create-rounds", "create-name", gameInstance.avatar, socket)
-                }}>
-                    Create Game
-                </Button>
+                <div className='flex aic jcc' style={{ gap: 20 }}>
+                    <Button onClick={() => {
+                        createGame("create-maxPlayers", "create-rounds", "create-name", gameInstance.avatar, socket)
+                    }}>
+                        Create Game
+                    </Button>
+                    <Button onClick={() => {
+                        createGame("10", "1", "Ethan", gameInstance.avatar, socket, true)
+                    }}>
+                        Test Game
+                    </Button>
+                </div>
                 <p style={{ fontSize: 12, marginTop: 5 }}>or <Link go="/">join game</Link></p>
 
             </div>
