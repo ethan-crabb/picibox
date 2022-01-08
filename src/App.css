@@ -79,7 +79,7 @@ p {
     display: flex;
     align-items: center;
     justify-content: center;
-    caret-color: transparent;
+    /* caret-color: transparent; */
 }
 .textarea:focus {
     border-color: #000;
@@ -162,6 +162,7 @@ input[type=number] {
 }
 .promptContainer {
     background-image: url("./img/other/notepad.jpeg");
+    /* padding: 0px 30px; */
     width: 500px;
     height: 200px;
     margin-left: auto;
@@ -174,9 +175,16 @@ input[type=number] {
 .emptyPrompt {
     width: 500px;
     height: 400px;
-    background-color: transparent;
+    /* background-color: transparent; */
 }
 .playerGridDisabled {
     opacity: .5;
     cursor: default !important;
+}
+.spinner {
+    height: 50px;
+    background-color: white;
+    padding: 1px;
+    border-radius: 50%;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, .3);
 }

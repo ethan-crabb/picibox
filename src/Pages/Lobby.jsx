@@ -8,13 +8,14 @@ import Connecting from "../Components/Connecting";
 import {
     // rest of the elements/components imported remain same
     useParams
-  } from 'react-router-dom';
+} from 'react-router-dom';
 import RandomAvatar from "../Components/RandomAvatar";
 import Button from "../Components/Button";
 import startGame from "../Helpers/start-game";
+import PlayerLobby from '../Components/Lobby'
 
 export default function Lobby(props) {
-    const {code} = useParams()
+    const { code } = useParams()
     const gameInstance = useContext(GameContext)
     const socket = gameInstance.socket
     const navigate = useNavigate()
@@ -63,12 +64,12 @@ export default function Lobby(props) {
             playersArray.push(
                 <div className="flex aic jcc fdc">
                     <RandomAvatar size={90} avatar={lobby[i].avatar} />
-                    <p style={{marginTop: 15}}>{lobby[i].name}</p>
+                    <p style={{ marginTop: 15 }}>{lobby[i].name}</p>
                 </div>
             )
         }
         return (
-            <div className="flex aic jcc" style={{flexWrap: "wrap", gap: 20}}>
+            <div className="flex aic jcc" style={{ flexWrap: "wrap", gap: 20 }}>
                 {playersArray}
             </div>
         )
@@ -81,13 +82,13 @@ export default function Lobby(props) {
                     setIsHost(true)
                 }
                 Host.push(
-                    <div className="flex jcsb aic" style={{width: "100%"}}>
+                    <div className="flex jcsb aic" style={{ width: "100%" }}>
                         <div style={{ gap: 20 }} className="flex aic">
                             <RandomAvatar avatar={lobby[i].avatar} />
                             <h3>{lobby[i].name}'s Game</h3>
                         </div>
-                        <div style={{boxShadow: "0px 0px 10px rgba(0,0,0,.5)", padding: 10, borderRadius: 10}}>
-                            { code }
+                        <div style={{ boxShadow: "0px 0px 10px rgba(0,0,0,.5)", padding: 10, borderRadius: 10 }}>
+                            {code}
                         </div>
                     </div>
                 )
@@ -99,7 +100,7 @@ export default function Lobby(props) {
     }
     const ControlButtons = () => {
         return (
-            <div className="flex aic jcc" style={{gap: 20, flex: 1}}>
+            <div className="flex aic jcc" style={{ gap: 20, flex: 1 }}>
                 <Button size="large" col="#FF3F3F" onClick={() => {
                     window.location.replace("/")
                 }}>Leave Game</Button>
@@ -116,10 +117,10 @@ export default function Lobby(props) {
         return (
             <div className="flex jcsb fdc fill" style={{}}>
                 <Host />
-                <div style={{width: "100%", marginLeft: "auto", marginRight: "auto"}}>
-                    <Players />
+                <div style={{ width: "100%", marginLeft: "auto", marginRight: "auto" }}>
+                    <PlayerLobby lobby={lobby} />
                 </div>
-                <div style={{width: "100%", marginLeft: "auto", marginRight: "auto"}}>
+                <div style={{ width: "100%", marginLeft: "auto", marginRight: "auto" }}>
                     <ControlButtons />
                 </div>
             </div>

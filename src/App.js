@@ -40,6 +40,11 @@ function App() {
                     icon: "🚨"
                 })
             })
+            socket.on("disconnect", () => {
+                toast.success("Disconnected", {
+                    icon: "🚨"
+                })
+            })
         })
     }, [])
     if (game.socket !== null) {
