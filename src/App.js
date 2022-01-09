@@ -1,6 +1,6 @@
 import './App.css';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router';
 import Home from './Pages/Home';
 import { toast, ToastContainer } from 'react-toastify';
@@ -9,6 +9,8 @@ import Create from './Pages/Create';
 import { GameContext } from './Helpers/game';
 import Lobby from './Pages/Lobby';
 import Game from './Pages/Game';
+import { ModalContext } from './Helpers/modal.context';
+import Modal from './Components/Modal';
 const io = require("socket.io-client");
 const socket = io("ws://localhost:8888")
 
@@ -19,6 +21,15 @@ function App() {
         avatar: null,
         update: (newVal) => { setGame({ ...game, ...newVal }) }
     })
+
+    const modalRef = useRef({})
+    const updateModal = (newValues) => {
+        setModal({
+            ...modalRef.current,
+            ...newValues
+        })
+    }
+    const [modal, setModal] = useState(undefined)
     useEffect(() => {
         socket.on("connect", () => {
             console.log("Connected to the game server!")
@@ -46,43 +57,73 @@ function App() {
                 })
             })
         })
+
+        // Set Modal Context
+
+        setModal({
+            active: false,
+            title: null,
+            text: null,
+            onClick: null,
+            update: updateModal
+        })
+        modalRef.current = {
+            active: false,
+            title: null,
+            text: null,
+            onClick: null,
+            update: updateModal
+        }
     }, [])
-    if (game.socket !== null) {
-        return (
-            <GameContext.Provider value={game}>
-                <div className='full flex aic jcc'>
-                    <div style={{ width: 1024, height: 650 }} className="flex aic jcc">
-                        <Router>
-                            <ToastContainer
-                                position="bottom-center"
-                                autoClose={3000}
-                                hideProgressBar={false}
-                                closeOnClick
-                                rtl={false}
-                                pauseOnFocusLoss
-                                draggable
-                                pauseOnHover
-                                progressStyle={{ backgroundColor: "#00B2FF" }}
-                                hideProgressBar={true}
-                            />
-                            <Routes>
-                                <Route path="/" element={<Home />} />
-                                <Route path="/create" element={<Create />} />
-                                <Route path="/lobby/:code" element={<Lobby />} />
-                                <Route path="/game/:code" element={<Game />} />
-                            </Routes>
-                        </Router>
-                    </div>
-                </div>
-            </GameContext.Provider>
-        )
-    } else {
-        console.log(game)
+    const LoadingComponent = () => {
         return (
             <div className='full flex aic jcc fdc'>
                 <h1>PiciPici Games</h1>
                 Loading...
             </div>
+        )
+    }
+    if (game.socket !== null) {
+        if (modal) {
+            return (
+                <ModalContext.Provider value={modal}>
+                    <GameContext.Provider value={game}>
+                        <Modal />
+                        <div className='full flex aic jcc'>
+                            <div style={{ width: 1024, height: 650 }} className="flex aic jcc">
+                                <Router>
+                                    <ToastContainer
+                                        position="bottom-center"
+                                        autoClose={3000}
+                                        hideProgressBar={false}
+                                        closeOnClick
+                                        rtl={false}
+                                        pauseOnFocusLoss
+                                        draggable
+                                        pauseOnHover
+                                        progressStyle={{ backgroundColor: "#00B2FF" }}
+                                        hideProgressBar={true}
+                                    />
+                                    <Routes>
+                                        <Route path="/" element={<Home />} />
+                                        <Route path="/create" element={<Create />} />
+                                        <Route path="/lobby/:code" element={<Lobby />} />
+                                        <Route path="/game/:code" element={<Game />} />
+                                    </Routes>
+                                </Router>
+                            </div>
+                        </div>
+                    </GameContext.Provider>
+                </ModalContext.Provider>
+            )
+        } else {
+            return (
+                <LoadingComponent />
+            )
+        }
+    } else {
+        return (
+            <LoadingComponent />
         )
     }
 }

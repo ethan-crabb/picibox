@@ -13,6 +13,8 @@ import RandomAvatar from "../Components/RandomAvatar";
 import Button from "../Components/Button";
 import startGame from "../Helpers/start-game";
 import PlayerLobby from '../Components/Lobby'
+import copy from 'copy-to-clipboard'
+import { ModalContext } from "../Helpers/modal.context";
 
 export default function Lobby(props) {
     const { code } = useParams()
@@ -21,6 +23,7 @@ export default function Lobby(props) {
     const navigate = useNavigate()
     const [isHost, setIsHost] = useState(false)
     const [lobby, setLobby] = useState(null)
+    const modal = useContext(ModalContext)
 
     useEffect(() => {
         socket.emit("get-lobby", {
@@ -53,27 +56,24 @@ export default function Lobby(props) {
                 Nav(navigate, `/game/${code}`)
             }
         })
+        socket.on("kick-player", (responce) => {
+            toast.success(responce.msg, {
+                icon: "❗"
+            })
+        })
+        socket.on("player-left", () => {
+            socket.emit("get-lobby", {
+                code: code
+            })
+        })
+        socket.on("kicked", () => {
+            toast.dismiss()
+            Nav(navigate, "/")
+            toast.success("You were kicked!", {
+                icon: "😢"
+            })
+        })
     }, [])
-
-    const Players = () => {
-        console.log("Loading players")
-        console.log(lobby)
-        const playersArray = new Array()
-        for (let i = 0; i < lobby.length; i++) {
-            console.log("Loop iteration")
-            playersArray.push(
-                <div className="flex aic jcc fdc">
-                    <RandomAvatar size={90} avatar={lobby[i].avatar} />
-                    <p style={{ marginTop: 15 }}>{lobby[i].name}</p>
-                </div>
-            )
-        }
-        return (
-            <div className="flex aic jcc" style={{ flexWrap: "wrap", gap: 20 }}>
-                {playersArray}
-            </div>
-        )
-    }
     const Host = () => {
         const Host = new Array()
         for (let i = 0; i < lobby.length; i++) {
@@ -87,7 +87,13 @@ export default function Lobby(props) {
                             <RandomAvatar avatar={lobby[i].avatar} />
                             <h3>{lobby[i].name}'s Game</h3>
                         </div>
-                        <div style={{ boxShadow: "0px 0px 10px rgba(0,0,0,.5)", padding: 10, borderRadius: 10 }}>
+                        <div title="Game Code" className="clickEffect" style={{ boxShadow: "0px 0px 10px #00B2FF", padding: 10, borderRadius: 10, backgroundColor: "#00B2FF", color: "white", cursor: "pointer" }} onClick={() => {
+                            copy(code)
+                            toast.success("Code copied!", {
+                                icon: "✔️",
+                                hideProgressBar: true
+                            })
+                        }}>
                             {code}
                         </div>
                     </div>
@@ -118,7 +124,21 @@ export default function Lobby(props) {
             <div className="flex jcsb fdc fill" style={{}}>
                 <Host />
                 <div style={{ width: "100%", marginLeft: "auto", marginRight: "auto" }}>
-                    <PlayerLobby lobby={lobby} />
+                    <PlayerLobby lobby={lobby} onClick={(i) => {
+                        if (isHost) {
+                            modal.update({
+                                active: true,
+                                title: "Kick a player",
+                                text: `Are you sure you want to kick ${lobby[i].name}?`,
+                                onClick: () => {
+                                    socket.emit("kick-player", {
+                                        player: lobby[i].id,
+                                        code: code
+                                    })
+                                }
+                            })
+                        }
+                    }} />
                 </div>
                 <div style={{ width: "100%", marginLeft: "auto", marginRight: "auto" }}>
                     <ControlButtons />

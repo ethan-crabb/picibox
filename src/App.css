@@ -11,6 +11,10 @@ html {
     font-family: 'Bungee',
         cursive;
 }
+.fontOpen {
+    font-family: 'Open Sans',
+    sans-serif !important;
+}
 h1,
 h2,
 h3,
@@ -110,12 +114,18 @@ p {
     border-radius: 50%;
     padding: 2.5px;
 }
-.avatarContainer:active {
+/* .avatarContainer:active {
     transform: scale(.9);
-}
-.avatarContainer {
+} */
+.clickEffect {
     transition: all .3s;
 }
+.clickEffect:active {
+    transform: scale(.9);
+}
+/* .avatarContainer {
+    transition: all .3s;
+} */
 .aifs {
     align-items: flex-start;
 }
@@ -191,4 +201,19 @@ input[type=number] {
 }
 .bgBlue {
     background-color: #00B2FF;
+}
+.modalContainer {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(255, 255, 255, .5);
+    z-index: 1000;
+}
+.modal {
+    background-color: #00B2FF;
+    width: 500px;
+    height: 200px;
+    border-radius: 10px;
+    border: 4px solid #018eca;
+    color: white;
 }

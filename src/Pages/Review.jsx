@@ -81,6 +81,7 @@ export default function Review(props) {
                 setAnswer(answer)
                 setStage(1)
                 setVotesRecceived(0)
+                setVoted(false)
             }
         })
         socket.on("end-game", (responce) => {
@@ -156,8 +157,8 @@ export default function Review(props) {
             // <div className={`flex aic jcc ${localProps.disabled ? "playerGridDisabled" : ""}`} style={{ flexWrap: "wrap", gap: 45 }}>
             //     {playerArray}
             // </div>
-            <div style={{ opacity: `${props.disabled ? .5 : 1}` }}>
-                <Lobby lobby={lobby} onClick={(i) => {
+            // <div style={{ opacity: `${props.disabled ? .5 : 1}` }}>
+                <Lobby disabledReason={localProps.disabled ? (reviewData[round].answers[answer].id === socket.id ? "You wrote this one 🔒" : "You've voted 🔒") : null} disabled={localProps.disabled} lobby={lobby} onClick={(i) => {
                     if (!localProps.disabled) {
                         setVoted(true)
                         socket.emit("vote-player", {
@@ -175,7 +176,7 @@ export default function Review(props) {
                         })
                     }
                 }} />
-            </div>
+            // </div>
         )
     }
     const VisualizePlayerScoreChanges = (props) => {
