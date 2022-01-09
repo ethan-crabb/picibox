@@ -11,6 +11,7 @@ import Confetti from 'react-confetti'
 import { RandomReveal } from 'react-random-reveal'
 import Tada from 'react-reveal/Tada';
 import Zoom from 'react-reveal/Zoom'
+import Button from '../Components/Button'
 
 export default function Review(props) {
     const gameInstance = useContext(GameContext)
@@ -69,6 +70,19 @@ export default function Review(props) {
                 }
             })
         })
+        socket.on("continue-review", (responce) => {
+            if (responce.error) {
+                toast.success(responce.msg, {
+                    icon: "❗"
+                })
+            } else {
+                const { round, answer } = responce.data
+                setRound(round)
+                setAnswer(answer)
+                setStage(1)
+                setVotesRecceived(0)
+            }
+        })
         socket.on("end-game", (responce) => {
             toast.success(responce.data, {
                 icon: "👋"
@@ -89,6 +103,31 @@ export default function Review(props) {
         }
         console.log("Updated review data to", props.reviewData)
     }, [props.reviewData])
+    const next = () => {
+        if (answer + 1 > reviewData[round].answers.length) {
+            if (round + 1 > reviewData.length) {
+                toast.success("Game Over!", {
+                    icon: "👋"
+                })
+            } else {
+                socket.emit("continue-review", {
+                    code: code,
+                    newValues: {
+                        round: round + 1,
+                        answer: 0
+                    }
+                })
+            }
+        } else {
+            socket.emit("continue-review", {
+                code: code,
+                newValues: {
+                    round: round,
+                    answer: answer + 1
+                }
+            })
+        }
+    }
     const PlayerVote = (localProps) => {
         // const playerArray = new Array()
         // for (let i = 0; i < lobby.length; i++) {
@@ -215,10 +254,10 @@ export default function Review(props) {
                 return (
                     <div className='flex aic jcc fdc' style={{ gap: 30, width: "100vw", height: "100vh" }}>
                         {/* <div style={{ position: "absolute" }}> */}
-                        <Confetti
+                        {/* <Confetti
                             width={window.innerWidth}
                             height={window.innerHeight}
-                        />
+                        /> */}
                         {/* </div> */}
                         <h1 className='flex aic jcc'>
                             {"It was "}
@@ -228,6 +267,12 @@ export default function Review(props) {
                         {/* <br /> */}
                         <p style={{ backgroundColor: "#00B2FF", padding: 10, borderRadius: 10, color: "white" }}>{currentRoundAnswerData.correctVotes}/{lobby.length - 1} people voted correctly</p>
                         <VisualizePlayerScoreChanges changeLog={currentRoundAnswerData.changeLog} />
+                        <div style={{ position: "absolute", bottom: 50 }}>
+                            {isHost
+                                ? <Button size="medium" onClick={next}>Continue</Button>
+                                : "Waiting to continue..."
+                            }
+                        </div>
                     </div>
                 )
             } else {
@@ -235,6 +280,12 @@ export default function Review(props) {
                     <Connecting />
                 )
             }
+        } else if (stage === 3) {
+            return (
+                <Container flex aic jcc bgBlue fdc>
+
+                </Container>
+            )
         }
     } else {
         return (
