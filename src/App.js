@@ -12,6 +12,8 @@ import Game from './Pages/Game';
 import { ModalContext } from './Helpers/modal.context';
 import Modal from './Components/Modal';
 import ReactTooltip from 'react-tooltip';
+import PromptStore from './Pages/PromptStore';
+import CreatePack from './Pages/CreatePack';
 
 const io = require("socket.io-client");
 const socket = io("ws://localhost:8888")
@@ -21,6 +23,7 @@ function App() {
         code: null,
         socket: socket,
         avatar: null,
+        createCache: null,
         update: (newVal) => { setGame({ ...game, ...newVal }) }
     })
 
@@ -112,6 +115,8 @@ function App() {
                                         <Route path="/create" element={<Create />} />
                                         <Route path="/lobby/:code" element={<Lobby />} />
                                         <Route path="/game/:code" element={<Game />} />
+                                        <Route path="/store" element={<PromptStore />} />
+                                        <Route path="/create-pack" element={<CreatePack />} />
                                     </Routes>
                                 </Router>
                             </div>

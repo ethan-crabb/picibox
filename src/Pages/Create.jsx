@@ -84,7 +84,7 @@ export default function Create() {
                         <br />
                         <Input value={playerName} onChange={(e) => { setPlayerName(e.target.value) }} id="create-name" placeholder="Name" />
                         <br />
-                        <div className='flex aic jcc' style={{ width: 250, height: 65, gap: 10 }}>
+                        <div className='flex aic' style={{ width: 250, height: 65, gap: 10 }}>
                             <ReactTooltip effect='solid' className='aiTooltip' place='bottom' />
                             <Switch activeBoxShadow="none" checkedIcon={<div style={{ width: 150, position: "relative", left: 40, top: 10, opacity: 1, fontSize: 13, color: "white" }}>AI Prompts</div>} uncheckedIcon={<div style={{ width: 150, position: "relative", right: 85, top: 10, opacity: .6, fontSize: 13 }}>Non AI Prompts</div>} width={180} height={35} checked={useAI} onChange={(checked) => setUseAI(checked)} onColor='#00B2FF' offColor='#EAEAEA' className='aiSwitch' />
                             <svg style={{ fill: "#757575", cursor: "pointer" }} onClick={() => {
@@ -110,7 +110,13 @@ export default function Create() {
                 </div>
                 <div className='flex aic jcc' style={{ gap: 20 }}>
                     <Button onClick={() => {
-                        createGame("create-maxPlayers", "create-rounds", "create-name", gameInstance.avatar, socket)
+                        if (!useAI) {
+                            createGame("create-maxPlayers", "create-rounds", "create-name", null, null, false, true, [
+                                "create-maxPlayers", "create-rounds", "create-name", gameInstance.avatar, socket
+                            ], navigate, gameInstance)
+                        } else {
+                            createGame("create-maxPlayers", "create-rounds", "create-name", gameInstance.avatar, socket)
+                        }
                     }}>
                         Create Game
                     </Button>
