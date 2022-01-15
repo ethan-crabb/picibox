@@ -216,4 +216,17 @@ input[type=number] {
     border-radius: 10px;
     border: 4px solid #018eca;
     color: white;
+    text-align: center;
+}
+#scoresContainer {
+    transition: all .5s;
+}
+.aiSwitch {
+    position: relative;
+    /* top: 10px; */
+    box-shadow: none;
+}
+.aiTooltip {
+    width: 200px;
+    text-align: center;
 }

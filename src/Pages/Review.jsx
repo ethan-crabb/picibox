@@ -26,6 +26,7 @@ export default function Review(props) {
     const [voted, setVoted] = useState(false)
     const [isHost, setIsHost] = useState(false)
     const [currentRoundAnswerData, setCurrentRoundAnswerData] = useState(null)
+    const [currentLobbyScoreData, setCurrentLobbyScoreData] = useState(new Array())
     const [innerReviewStage, setInnerReviewStage] = useState(1)
     const navigate = useNavigate()
     useEffect(() => {
@@ -51,6 +52,7 @@ export default function Review(props) {
         socket.on("vote-reveal", (responce) => {
             setStage(2)
             setCurrentRoundAnswerData(responce.data)
+            setCurrentLobbyScoreData(responce.data.lobbyScores)
         })
         socket.on("vote-player", (responce) => {
             if (responce.error) {
@@ -82,6 +84,15 @@ export default function Review(props) {
                 setStage(1)
                 setVotesRecceived(0)
                 setVoted(false)
+            }
+        })
+        socket.on("reveal-scores-screen", (responce) => {
+            if (responce.error) {
+                toast.success(responce.msg, {
+                    icon: "❗"
+                })
+            } else {
+                setStage(3)
             }
         })
         socket.on("end-game", (responce) => {
@@ -158,24 +169,24 @@ export default function Review(props) {
             //     {playerArray}
             // </div>
             // <div style={{ opacity: `${props.disabled ? .5 : 1}` }}>
-                <Lobby disabledReason={localProps.disabled ? (reviewData[round].answers[answer].id === socket.id ? "You wrote this one 🔒" : "You've voted 🔒") : null} disabled={localProps.disabled} lobby={lobby} onClick={(i) => {
-                    if (!localProps.disabled) {
-                        setVoted(true)
-                        socket.emit("vote-player", {
-                            code: code,
-                            playerVoteID: lobby[i].id,
-                            answerInQuestion: reviewData[round].answers[answer].answer,
-                            round: round
-                        })
-                        toast.success(`You voted ${lobby[i].name}`, {
-                            icon: "✔️"
-                        })
-                    } else {
-                        toast.success("You can't vote", {
-                            icon: "❌"
-                        })
-                    }
-                }} />
+            <Lobby disabledReason={localProps.disabled ? (reviewData[round].answers[answer].id === socket.id ? "You wrote this one 🔒" : "You've voted 🔒") : null} disabled={localProps.disabled} lobby={lobby} onClick={(i) => {
+                if (!localProps.disabled) {
+                    setVoted(true)
+                    socket.emit("vote-player", {
+                        code: code,
+                        playerVoteID: lobby[i].id,
+                        answerInQuestion: reviewData[round].answers[answer].answer,
+                        round: round
+                    })
+                    toast.success(`You voted ${lobby[i].name}`, {
+                        icon: "✔️"
+                    })
+                } else {
+                    toast.success("You can't vote", {
+                        icon: "❌"
+                    })
+                }
+            }} />
             // </div>
         )
     }
@@ -270,7 +281,11 @@ export default function Review(props) {
                         <VisualizePlayerScoreChanges changeLog={currentRoundAnswerData.changeLog} />
                         <div style={{ position: "absolute", bottom: 50 }}>
                             {isHost
-                                ? <Button size="medium" onClick={next}>Continue</Button>
+                                ? <Button size="medium" onClick={() => {
+                                    socket.emit("reveal-scores-screen", {
+                                        code: code
+                                    })
+                                }}>Continue</Button>
                                 : "Waiting to continue..."
                             }
                         </div>
@@ -282,10 +297,30 @@ export default function Review(props) {
                 )
             }
         } else if (stage === 3) {
+            const componentArray = new Array()
+            setTimeout(() => {
+                document.getElementById("scoresContainer").classList.add("bgBlue")
+            }, 1500)
+            for (let i = 0; i < currentLobbyScoreData.length; i++) {
+                componentArray.push(
+                    <div className='flex aic jcc' style={{ color: "white", marginBottom: 5, gap: 5 }}>
+                        <p>{`${currentLobbyScoreData[i].player}: `}</p>
+                        <p>{currentLobbyScoreData[i].score}</p>
+                    </div>
+                )
+            }
             return (
-                <Container flex aic jcc bgBlue fdc>
-
-                </Container>
+                <div className={"flex aic jcc full fdc"} id="scoresContainer">
+                    <h1 style={{ color: "white" }}>Scores:</h1>
+                    <br />
+                    {componentArray}
+                    <div style={{ position: "absolute", bottom: 50, color: "white" }}>
+                        {isHost
+                            ? <Button size="medium" onClick={next}>Continue</Button>
+                            : "Waiting to continue..."
+                        }
+                    </div>
+                </div>
             )
         }
     } else {

@@ -13,6 +13,7 @@ import Container from '../Components/Container';
 import Review from './Review';
 import spinner from "../img/other/spinner.gif"
 import Lobby from '../Components/Lobby';
+import Tada from 'react-reveal/Tada';
 
 export default function Game() {
     const navigate = useNavigate()
@@ -25,6 +26,7 @@ export default function Game() {
     const [stage, setStage] = useState(1)
     const [reviewData, setReviewData] = useState(null)
     const [submitedAnswer, setSubmitedAnswer] = useState(false)
+    const [scores, setScores] = useState(new Array())
     useEffect(() => {
         socket.emit("get-lobby", {
             code: code
@@ -48,8 +50,8 @@ export default function Game() {
             }
         })
         socket.on("new-prompt", (responce) => {
-            console.log("Recceived new prompt")
-            setStage(1)
+            console.log("Recceived new prompt") // ----------------------- HERE
+            // setStage(4)
             setPrompt(responce.data)
             // setPrompt(null)
             setSubmitedAnswer(false)
@@ -66,7 +68,8 @@ export default function Game() {
                     icon: "❗"
                 })
             } else {
-                setStage(2)
+                setStage(4)
+                // setStage(2)
             }
         })
         socket.on("submit-answer", (responce) => {
@@ -140,6 +143,7 @@ export default function Game() {
             return (
                 <div className="flex aic jcsb fdc" style={{ height: "80%" }}>
                     <Fade>
+                        <h3 style={{ fontSize: 25, color: "#000", textShadow: "0px 3px 0px #00B2FF", marginBottom: 20 }}>Write your responce</h3>
                         <PromptComponent />
                     </Fade>
                     <br />
@@ -216,6 +220,19 @@ export default function Game() {
                 <div>
                     <Review code={code} lobby={lobby} reviewData={reviewData} />
                 </div>
+            )
+        } else if (stage === 4) {
+            setTimeout(() => {
+                setStage(2)
+            }, 3000)
+            return (
+                <Zoom duration={500}>
+                    <Container flex aic jcc fdc>
+                        <Tada delay={1500}>
+                            <h1>It's time for the next round. Strap in!</h1>
+                        </Tada>
+                    </Container>
+                </Zoom>
             )
         }
     } else {

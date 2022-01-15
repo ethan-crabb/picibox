@@ -11,6 +11,8 @@ import Lobby from './Pages/Lobby';
 import Game from './Pages/Game';
 import { ModalContext } from './Helpers/modal.context';
 import Modal from './Components/Modal';
+import ReactTooltip from 'react-tooltip';
+
 const io = require("socket.io-client");
 const socket = io("ws://localhost:8888")
 
@@ -87,6 +89,7 @@ function App() {
         if (modal) {
             return (
                 <ModalContext.Provider value={modal}>
+                    <ReactTooltip />
                     <GameContext.Provider value={game}>
                         <Modal />
                         <div className='full flex aic jcc'>
