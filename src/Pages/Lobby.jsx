@@ -26,6 +26,11 @@ export default function Lobby(props) {
     const modal = useContext(ModalContext)
 
     useEffect(() => {
+        copy(code)
+        toast.success("Code copied!", {
+            icon: "✔️",
+            hideProgressBar: true
+        })
         socket.emit("get-lobby", {
             code: code
         })
@@ -122,17 +127,19 @@ export default function Lobby(props) {
                 <div style={{ width: "100%", marginLeft: "auto", marginRight: "auto" }}>
                     <PlayerLobby lobby={lobby} onClick={(i) => {
                         if (isHost) {
-                            modal.update({
-                                active: true,
-                                title: "Kick a player",
-                                text: `Are you sure you want to kick ${lobby[i].name}?`,
-                                onClick: () => {
-                                    socket.emit("kick-player", {
-                                        player: lobby[i].id,
-                                        code: code
-                                    })
-                                }
-                            })
+                            if (lobby[i].id !== socket.id) {
+                                modal.update({
+                                    active: true,
+                                    title: "Kick a player",
+                                    text: `Are you sure you want to kick ${lobby[i].name}?`,
+                                    onClick: () => {
+                                        socket.emit("kick-player", {
+                                            player: lobby[i].id,
+                                            code: code
+                                        })
+                                    }
+                                })
+                            }
                         }
                     }} />
                 </div>

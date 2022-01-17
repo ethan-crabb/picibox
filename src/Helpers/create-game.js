@@ -3,13 +3,13 @@ import copy from 'copy-to-clipboard';
 import Nav from "./Nav";
 import { useNavigate } from "react-router";
 
-export const createGame = (maxPlayersID, roundsID, nameID, avatar, socket, test, promptList) => {
+export const createGame = (maxPlayersID, roundsID, nameID, avatar, socket, test, promptList, promptPackID) => {
     const maxPlayers = test ? maxPlayersID : document.getElementById(maxPlayersID).value
     const rounds = test ? roundsID : document.getElementById(roundsID).value
     const name = test ? nameID : document.getElementById(nameID).value
 
     if (maxPlayers) {
-        if (rounds) {
+        if (rounds && parseInt(rounds) !== 0 && parseInt(rounds) <= 15) {
             if (name) {
                 toast.success("Creating...", {
                     icon: "⚙️",
@@ -19,7 +19,8 @@ export const createGame = (maxPlayersID, roundsID, nameID, avatar, socket, test,
                     gameSettings: {
                         maxPlayers: maxPlayers,
                         rounds: rounds,
-                        prompts: promptList
+                        prompts: promptList,
+                        promptPackID: promptPackID
                     },
                     userSettings: {
                         name: name,
@@ -32,7 +33,7 @@ export const createGame = (maxPlayersID, roundsID, nameID, avatar, socket, test,
                 })
             }
         } else {
-            toast.success("Rounds is empty!", {
+            toast.success("Rounds must be 0-15", {
                 icon: "❗"
             })
         }

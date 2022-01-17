@@ -41,10 +41,6 @@ export default function Create() {
                 setTimeout(() => {
                     toast.dismiss()
                     setTimeout(() => {
-                        toast.success("Code copied!", {
-                            icon: "✔️",
-                            hideProgressBar: true
-                        })
                         Nav(navigate, `/lobby/${responce.data}`)
                     }, 500)
                 }, 1000)
@@ -125,15 +121,21 @@ export default function Create() {
                                     })
                                 } else {
                                     if (x === Object.keys(valuesObj)[Object.keys(valuesObj).length - 1]) {
-                                        gameInstance.update({
-                                            createCache: {
-                                                maxPlayers: document.getElementById("create-maxPlayers").value,
-                                                rounds: document.getElementById("create-rounds").value,
-                                                playerName: document.getElementById("create-name").value,
-                                                avatar: gameInstance.avatar,
-                                            }
-                                        })
-                                        Nav(navigate, "/store")
+                                        if (parseInt(valuesObj.rounds) !== 0 && parseInt(valuesObj.rounds) <= 15) {
+                                            gameInstance.update({
+                                                createCache: {
+                                                    maxPlayers: document.getElementById("create-maxPlayers").value,
+                                                    rounds: document.getElementById("create-rounds").value,
+                                                    playerName: document.getElementById("create-name").value,
+                                                    avatar: gameInstance.avatar,
+                                                }
+                                            })
+                                            Nav(navigate, "/store")
+                                        } else {
+                                            toast.success("Rounds must be 0-15", {
+                                                icon: "❗"
+                                            })
+                                        }
                                     }
                                 }
                             }

@@ -1,6 +1,6 @@
 html {
     transition: all .3s;
-    overflow-x: hidden;
+    /* overflow-x: hidden; */
     line-height: 23px;
 }
 ::-webkit-scrollbar {
@@ -308,7 +308,9 @@ input[type=number] {
 }
 .packsGrid {
     /* align-items: center; */
-    justify-content: center;
+    /* justify-content: center; */
+    position: relative;
+    top: 20px;
 }
 .heightZero {
     transition: all .5s;
@@ -328,4 +330,46 @@ input[type=number] {
     align-items: center;
     justify-content: center;
     cursor: pointer;
+}
+#likeDislikeInteractContainer {
+    transition: all .3s;
+}
+.op0 {
+    opacity: 0 !important;
+}
+.packModal h5 {
+    font-size: 19px;
+    margin-bottom: 13px;
+    opacity: .8;
+}
+
+.packModal p {
+    font-size: 12px;
+    opacity: .5;
+    line-height: 20px;
+}
+.miniPromptContainer {
+    background-image: url("./img/other/notepad.jpeg");
+    text-align: center;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, .5);
+    background-position: center;
+    border-radius: 10px;
+    padding: 0px 10px;
+    overflow-wrap: break-word;
+}
+.miniPromptController {
+    gap: 10px;
+}
+.miniPromptController svg {
+    opacity: .7;
+    cursor: pointer;
+    background-color: #fff;
+    border-radius: 50%;
+    display: flex;
+    height: 20px;
+    width: 20px;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, .4);
 }
