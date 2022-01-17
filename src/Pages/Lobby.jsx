@@ -30,11 +30,7 @@ export default function Lobby(props) {
             code: code
         })
         socket.on("get-lobby", (responce) => {
-            if (responce.error) {
-                toast.success(responce.msg, {
-                    icon: "❗"
-                })
-            } else {
+            if (!responce.error) {
                 setLobby(responce.data)
             }
         })

@@ -111,9 +111,44 @@ export default function Create() {
                 <div className='flex aic jcc' style={{ gap: 20 }}>
                     <Button onClick={() => {
                         if (!useAI) {
-                            createGame("create-maxPlayers", "create-rounds", "create-name", null, null, false, true, [
-                                "create-maxPlayers", "create-rounds", "create-name", gameInstance.avatar, socket
-                            ], navigate, gameInstance)
+                            const valuesObj = {
+                                maxPlayers: document.getElementById("create-maxPlayers").value,
+                                rounds: document.getElementById("create-rounds").value,
+                                playerName: document.getElementById("create-name").value,
+                                avatar: gameInstance.avatar,
+                                socket: socket
+                            }
+                            for (const x in valuesObj) {
+                                if (!valuesObj[x]) {
+                                    toast.success("Some feilds empty!", {
+                                        icon: "❗"
+                                    })
+                                } else {
+                                    if (x === Object.keys(valuesObj)[Object.keys(valuesObj).length - 1]) {
+                                        gameInstance.update({
+                                            createCache: {
+                                                maxPlayers: document.getElementById("create-maxPlayers").value,
+                                                rounds: document.getElementById("create-rounds").value,
+                                                playerName: document.getElementById("create-name").value,
+                                                avatar: gameInstance.avatar,
+                                            }
+                                        })
+                                        Nav(navigate, "/store")
+                                    }
+                                }
+                            }
+                            gameInstance.update({
+                                createCache: {
+                                    maxPlayers: document.getElementById("create-maxPlayers").value,
+                                    rounds: document.getElementById("create-rounds").value,
+                                    playerName: document.getElementById("create-name").value,
+                                    avatar: gameInstance.avatar,
+                                    socket: socket
+                                }
+                            })
+                            // createGame("create-maxPlayers", "create-rounds", "create-name", null, null, false, true, [
+                            //     "create-maxPlayers", "create-rounds", "create-name", gameInstance.avatar, socket
+                            // ], navigate, gameInstance)
                         } else {
                             createGame("create-maxPlayers", "create-rounds", "create-name", gameInstance.avatar, socket)
                         }

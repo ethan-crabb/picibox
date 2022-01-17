@@ -21,32 +21,58 @@ export default function Game() {
     const gameInstance = useContext(GameContext)
     const socket = gameInstance.socket
     const [prompt, setPrompt] = useState(null)
+    let backupPrompt = ""
+    // const [backupPrompt, setBackupPrompt] = useState(null)
     const [lobby, setLobby] = useState(null)
     const [owner, setOwner] = useState(false)
     const [stage, setStage] = useState(1)
     const [reviewData, setReviewData] = useState(null)
     const [submitedAnswer, setSubmitedAnswer] = useState(false)
-    const [scores, setScores] = useState(new Array())
     useEffect(() => {
+        setTimeout(() => {
+            if (!prompt) {
+                socket.emit("request-current-prompt", {
+                    code: code
+                })
+            }
+        }, 3000)
         socket.emit("get-lobby", {
             code: code
         })
-        socket.on("get-lobby", (responce) => {
+        socket.on("request-current-prompt", (responce) => {
             if (responce.error) {
-                toast.success(responce.msg, {
-                    icon: "❗"
-                })
+
             } else {
+                setPrompt(responce.data)
+            }
+        })
+        socket.on("new-round", () => {
+            setStage(1)
+            setSubmitedAnswer(false)
+            // setPrompt(null)
+        })
+        socket.on("get-lobby", (responce) => {
+            if (!responce.error) {
                 for (let i = 0; i < responce.data.length; i++) {
                     if (responce.data[i].host) {
                         if (responce.data[i].id === socket.id) {
                             setOwner(true)
+                            socket.emit("request-first-prompt", {
+                                code: code
+                            })
                         } else {
                             setOwner(false)
                         }
                     }
                 }
                 setLobby(responce.data)
+            }
+        })
+        socket.on("refresh-prompt", (responce) => {
+            if (responce.error) {
+                toast.success(responce.msg, {
+                    icon: "❗"
+                })
             }
         })
         socket.on("new-prompt", (responce) => {
@@ -122,7 +148,8 @@ export default function Game() {
                     : <div>
                         {owner
                             ? <Button onClick={() => {
-                                setPrompt(null)
+                                // backupPrompt = prompt
+                                // setPrompt(null)
                                 socket.emit("refresh-prompt", {
                                     code: code
                                 })
