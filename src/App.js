@@ -16,7 +16,7 @@ import PromptStore from './Pages/PromptStore';
 import CreatePack from './Pages/CreatePack';
 
 const io = require("socket.io-client");
-const socket = io("ws://localhost:8888")
+const socket = io("https://guarded-springs-28926.herokuapp.com/")
 
 function App() {
     const [game, setGame] = useState({
