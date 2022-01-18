@@ -120,7 +120,7 @@ export default function PromptStore() {
                 // packForward(props.prompts, props.code)
             }}>
                 <h5>{props.title}</h5>
-                <p>{props.des.length > 200 ? props.des.substring(0, 135) + "..." : props.des}</p>
+                <p>{props.des.length > 90 ? props.des.substring(0, 90) + "..." : props.des}</p>
                 <div className='flex jcsb aic'>
                     <div className='flex' style={{ gap: 15, marginTop: 13 }}>
                         <div className='flex aic jcc' style={{ gap: 5 }}>
