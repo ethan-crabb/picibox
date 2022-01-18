@@ -377,8 +377,8 @@ input[type=number] {
     #mainContent {
         height: 100vh;
         overflow: hidden;
-        justify-content: flex-start !important;
-        align-items: flex-start !important;
+        justify-content: center !important;
+        align-items: center !important;
     }
     #packSelectContainer {
         max-height: 300px;
