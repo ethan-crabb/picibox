@@ -12,7 +12,7 @@ export const joinGame = (nameID, codeID, avatar, socket) => {
             })
             socket.emit("join-game", {
                 name: name,
-                code: code,
+                code: code.toUpperCase(),
                 avatar: avatar
             })
         } else {
