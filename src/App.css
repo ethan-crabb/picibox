@@ -373,3 +373,14 @@ input[type=number] {
     padding: 5px;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, .4);
 }
+@media only screen and (max-height: 900px) {
+    #mainContent {
+        height: 100vh;
+        overflow: hidden;
+        justify-content: flex-start !important;
+        align-items: flex-start !important;
+    }
+    #packSelectContainer {
+        max-height: 300px;
+    }
+}

@@ -199,7 +199,7 @@ export default function PromptStore() {
                 <div style={{ width: 170, marginTop: 30 }}>
                     <Select options={sortOptions} defaultValue={sortOptions[0]} onChange={(e) => { setSort(e.value) }} />
                 </div>
-                <div style={{ width: "100%", height: "fit-content", maxHeight: "500", backgroundColor: "#fff", marginTop: 20, gap: 30, flexWrap: "wrap", marginBottom: 30, overflowY: "scroll", paddingBottom: 10 }} className='flex packsGrid'>
+                <div id="packSelectContainer" style={{ width: "100%", height: "fit-content", maxHeight: "500", backgroundColor: "#fff", marginTop: 20, gap: 30, flexWrap: "wrap", marginBottom: 30, overflowY: "scroll", paddingBottom: 10 }} className='flex packsGrid'>
                     <RenderPacksArray />
                 </div>
                 <div className='flex fdc aic jcc' style={{ gap: 10 }}>
