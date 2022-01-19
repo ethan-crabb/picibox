@@ -26,7 +26,7 @@ export default function RandomAvatar(props) {
         }
     }, [])
     return (
-        <div onClick={() => {
+        <div id={props.id} onClick={() => {
             if (props.onClick) {
                 props.onClick()
             } else {

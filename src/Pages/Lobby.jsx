@@ -83,9 +83,9 @@ export default function Lobby(props) {
                     setIsHost(true)
                 }
                 Host.push(
-                    <div className="flex jcsb aic" style={{ width: "100%" }}>
+                    <div id="lobbyHeadBar" className="flex jcsb aic" style={{ width: "100%" }}>
                         <div style={{ gap: 20 }} className="flex aic">
-                            <RandomAvatar avatar={lobby[i].avatar} />
+                            <RandomAvatar id="lobbyOwnerAvatar" avatar={lobby[i].avatar} />
                             <h3>{lobby[i].name}'s Game</h3>
                         </div>
                         <div title="Game Code" className="clickEffect" style={{ boxShadow: "0px 0px 10px #00B2FF", padding: 10, borderRadius: 10, backgroundColor: "#00B2FF", color: "white", cursor: "pointer" }} onClick={() => {
@@ -122,7 +122,7 @@ export default function Lobby(props) {
     }
     if (lobby) {
         return (
-            <div className="flex jcsb fdc fill" style={{}}>
+            <div className="flex jcsb fdc fill" style={{ overflow: "hidden" }}>
                 <Host />
                 <div style={{ width: "100%", marginLeft: "auto", marginRight: "auto" }}>
                     <PlayerLobby lobby={lobby} onClick={(i) => {
@@ -143,7 +143,7 @@ export default function Lobby(props) {
                         }
                     }} />
                 </div>
-                <div style={{ width: "100%", marginLeft: "auto", marginRight: "auto" }}>
+                <div id="controlButtonsContainer" style={{ width: "100%", marginLeft: "auto", marginRight: "auto" }}>
                     <ControlButtons />
                 </div>
             </div>

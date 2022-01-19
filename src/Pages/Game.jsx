@@ -135,7 +135,7 @@ export default function Game() {
         return (
             // <Fade>
             <div className="flex aic jcc fdc" style={{ gap: 20 }}>
-                <div className="promptContainer flex aic jcc">
+                <div id="promptContainerInGame" className="promptContainer flex aic jcc">
                     <div className='flex aic jcc' style={{ width: "100%", height: "100%", padding: 20 }}>
                         {prompt
                             ? <Fade><p>{prompt}</p></Fade>
@@ -174,7 +174,7 @@ export default function Game() {
                         <PromptComponent />
                     </Fade>
                     <br />
-                    <div>
+                    <div id="promptSelectLobby">
                         <Lobby lobby={lobby} />
                     </div>
                     <div style={{ position: "relative", top: 20 }}>
