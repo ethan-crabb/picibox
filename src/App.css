@@ -375,12 +375,20 @@ input[type=number] {
 }
 @media only screen and (max-height: 900px) {
     #mainContent {
-        height: 100vh;
         overflow: hidden;
         justify-content: center !important;
         align-items: center !important;
     }
     #packSelectContainer {
         max-height: 300px;
+    }
+    #promptReviewVoteContainer {
+        width: 1024px !important;
+        overflow: visible !important;
+    }
+    #scoresContainer {
+        width: 100vw !important;
+        border-radius: 10px !important;
+        height: 100vh !important;
     }
 }

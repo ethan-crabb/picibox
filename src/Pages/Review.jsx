@@ -99,9 +99,7 @@ export default function Review(props) {
             toast.success(responce.data, {
                 icon: "👋"
             })
-            setTimeout(() => {
-                Nav(navigate, "/")
-            }, 2000);
+            Nav(navigate, "/")
         })
         socket.on("reveal-winners", (responce) => {
             if (responce.error) {
@@ -257,7 +255,7 @@ export default function Review(props) {
             } else if (innerReviewStage === 2) {
                 try {
                     return (
-                        <div style={{ position: "relative", gap: 30 }} className="flex aic jcc fdc">
+                        <div id="promptReviewVoteContainer" style={{ position: "relative", gap: 30, overflow: "visible" }} className="flex aic jcc fdc">
                             <div style={{
                                 position: "absolute", top: 0,
                                 left: 0,
@@ -271,7 +269,7 @@ export default function Review(props) {
                             </div>
                             <h3 style={{ fontSize: 25, color: "#000", textShadow: "0px 3px 0px #00B2FF" }}>{reviewData[round].answers[answer].id === socket.id ? "You wrote this one" : "Who wrote this?"}</h3>
                             <br />
-                            <div className="flex aic jcc" style={{ gap: 20 }}>
+                            <div id="promptReviewVoteContainer" className="flex aic jcc" style={{ gap: 20 }}>
                                 <Container promptContainer flex aic jcc>
                                     {reviewData[round].prompt}
                                 </Container>

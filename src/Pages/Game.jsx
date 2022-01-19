@@ -84,7 +84,7 @@ export default function Game() {
         })
         socket.on("end-game", (responce) => {
             toast.success(responce.data, {
-                icon: "❌"
+                icon: "👋"
             })
             Nav(navigate, "/")
         })

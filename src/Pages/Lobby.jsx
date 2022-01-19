@@ -41,7 +41,7 @@ export default function Lobby(props) {
         })
         socket.on("end-game", (responce) => {
             toast.success(responce.data, {
-                icon: "❌"
+                icon: "👋"
             })
             Nav(navigate, "/")
         })
