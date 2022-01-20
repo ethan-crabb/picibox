@@ -39,9 +39,9 @@ function App() {
     useEffect(() => {
         socket.on("connect", () => {
             console.log("Connected to the game server!")
-            console.log(sessionStorage.getItem("token"))
-            socket.emit("log-on", {
-                id: sessionStorage.getItem("token")
+            socket.emit("log-on")
+            socket.on("log-on", (response) => {
+                console.log(response.data)
             })
             socket.on("save-socket", (responce) => {
                 console.log("Saving socket to localstorage")
