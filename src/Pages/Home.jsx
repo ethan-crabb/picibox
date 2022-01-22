@@ -50,7 +50,7 @@ export default function Home() {
             <Container flex fdc aic>
                 <RandomAvatar regen />
                 <div style={{ marginBottom: 20 }}></div>
-                <Input id="join-name" placeholder="Name" />
+                <Input maxLength={6} id="join-name" placeholder="Name" />
                 <Input id="join-code" placeholder="Game Code" noMar />
                 <br />
                 <Button onClick={() => {
