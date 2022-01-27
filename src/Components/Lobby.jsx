@@ -10,7 +10,7 @@ export default function Lobby(props) {
     const playersArray = new Array()
     root: for (let i = 0; i < props.lobby.length; i++) {
         console.log(displayPlayerStack, i)
-        if (displayPlayerStack && i + 1 === 3) {
+        if ((displayPlayerStack && !props.overflow) && i + 1 === 3) {
             playersArray.push(
                 <div className="flex aic jcc fdc">
                     <RandomAvatar onClick={() => {
@@ -42,7 +42,7 @@ export default function Lobby(props) {
     }
     const LobbyContainer = () => {
         return (
-            <div className="flex aic jcc" style={{ flexWrap: "wrap", gap: 40, zIndex: 50 }}>
+            <div className="flex aic jcc" style={{ flexWrap: "wrap", gap: 40, zIndex: 50, maxWidth: "100vw" }}>
                 {playersArray}
             </div>
         )

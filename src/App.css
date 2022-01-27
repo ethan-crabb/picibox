@@ -4,17 +4,19 @@ html {
     line-height: 23px;
 }
 ::-webkit-scrollbar {
-    width: 15px;
+    width: 10px;
+    height: 10px;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-    background: transparent;
+    background: #D6D6D6;
+    padding: 5px;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-    background: #888;
+    background: #eaeaea;
     border-radius: 10px;
 }
 
@@ -396,33 +398,49 @@ input[type=number] {
     #playGuide {
         display: none;
     }
-    #mainContent {
-        width: 900px !important;
-    }
 }
 @media screen and (max-width: 940px) {
-    #mainContent {
-        width: 700px !important;
-    }
     #yourSettingsContainer {
         width: fit-content !important;
         flex: 0 !important;
     }
 }
-@media screen and (max-width: 740px) {
-    #mainContent {
-        width: 550px !important;
+@media screen and (max-width: 840px) {
+    .packPrev {
+        width: 100vw !important;
+        height: 100vh !important;
+        max-height: 100vh !important;
+        padding: 0 !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        border-radius: 0 !important;
     }
+    .packModal {
+        width: fit-content !important;
+        height: fit-content !important;
+    }
+    .packPad {
+        padding: 0 !important;
+        width: 90% !important;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .antiRight {
+        right: 0 !important;
+    }
+}
+@media screen and (max-width: 740px) {
     #promptSelectLobby {
         display: none;
     }
 }
 @media screen and (max-width: 550px) {
-    #mainContent {
+    /* #mainContent {
         width: 100vw !important;
         height: 100vh !important;
         overflow-y: auto;
-    }
+    } */
     #settingsContainerContainer {
         flex-direction: column !important;
         overflow: visible;
@@ -431,10 +449,6 @@ input[type=number] {
     }
     #createGameContainer {
         align-items: center !important;
-    }
-    #createGameButtons {
-        margin-top: 50px;
-        /* padding-bottom: 10px; */
     }
     #yourSettingsContainer {
         margin-top: 30px;
@@ -467,5 +481,22 @@ input[type=number] {
     }
     #promptContainerInGame {
         width: 300px ;
+    }
+    #answerSubmitPlayersLobby {
+        display: none;
+    }
+    #answerSubmitFullContainer {
+        justify-content: center;
+    }
+}
+@media screen and (max-height: 650px) {
+    #mainContent {
+        height: 100vh !important;
+        overflow-y: auto !important;
+        /* justify-content: flex-start; */
+        align-items: flex-start !important;
+    }
+    .html {
+        overflow-y: auto !important;
     }
 }

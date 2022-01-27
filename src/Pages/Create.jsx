@@ -63,7 +63,7 @@ export default function Create() {
                 <RandomAvatar regen />
                 New Lobby
             </div>
-            <div style={{ width: "100%", height: "100%", position: "relative" }} className='flex aic jcc fdc'>
+            <div style={{ width: "100%", height: "fit-content", position: "relative" }} className='flex aic jcc fdc'>
                 <div className='flex jcsb' id="settingsContainerContainer" style={{ padding: "0px", position: "relative", width: "100%", height: "80%" }}>
                     <SettingsContainer>
                         <h2>Game <br /> Settings</h2>
@@ -104,7 +104,7 @@ export default function Create() {
                         </ul>
                     </div>
                 </div>
-                <div className='flex aic jcc' id="createGameButtons" style={{ gap: 20 }}>
+                <div className='flex aic jcc' style={{ height: "fit-content", marginTop: 50 }} id="createGameButtons">
                     <Button onClick={() => {
                         if (!useAI) {
                             const valuesObj = {
@@ -157,11 +157,11 @@ export default function Create() {
                     }}>
                         Create Game
                     </Button>
-                    <Button onClick={() => {
+                    {/* <Button onClick={() => {
                         createGame("10", "1", "Ethan", gameInstance.avatar, socket, true)
                     }}>
                         Test Game
-                    </Button>
+                    </Button> */}
                 </div>
                 <p style={{ fontSize: 12, marginTop: 5 }}>or <Link go="/">join game</Link></p>
 

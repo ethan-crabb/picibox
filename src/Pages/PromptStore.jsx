@@ -142,11 +142,11 @@ export default function PromptStore() {
         return (
             <div style={{ position: "absolute", width: "100vw", height: "100vh", backgroundColor: "rgba(0,0,0,.5)", zIndex: 1000 }} className='flex aic jcc packModal'>
                 <Fade duration={400}>
-                    <div style={{ backgroundColor: "#fff", width: "55%", height: "70%", minHeight: 300, maxHeight: 400, width: 700, padding: 20, borderRadius: 20 }}>
-                        <div style={{ width: "100%", height: "85%", padding: 35 }} className='flex jcsb fdc'>
+                    <div style={{ backgroundColor: "#fff", width: "55%", height: "70%", minHeight: 300, maxHeight: 400, width: 700, padding: 20, borderRadius: 20 }} className='packPrev'>
+                        <div style={{ width: "100%", height: "85%", padding: 35 }} className='flex jcsb fdc packPad'>
                             <div className='flex jcsb aic'>
                                 <h5 style={{ margin: 0, fontSize: 20 }}>{packPreview.title}</h5>
-                                <svg style={{ position: "relative", right: 65, opacity: .5, cursor: "pointer" }} onClick={() => setPackPreview(null)} xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none" /><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z" /></svg>
+                                <svg className='antiRight' style={{ position: "relative", right: 65, opacity: .5, cursor: "pointer" }} onClick={() => setPackPreview(null)} xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none" /><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z" /></svg>
                             </div>
                             <br />
                             <div className='flex aic jcsb' style={{ flex: 1, gap: 0 }}>
@@ -195,11 +195,11 @@ export default function PromptStore() {
                 : null
             }
             <div className="flex aic jcc fdc" style={{ width: "100%" }}>
-                <h1>Pick a prompt pack</h1>
+                <h1 style={{ textAlign: "center", lineHeight: 1 }}>Pick a prompt pack</h1>
                 <div style={{ width: 170, marginTop: 30 }}>
                     <Select options={sortOptions} defaultValue={sortOptions[0]} onChange={(e) => { setSort(e.value) }} />
                 </div>
-                <div id="packSelectContainer" style={{ width: "100%", height: "fit-content", maxHeight: "500", backgroundColor: "#fff", marginTop: 20, gap: 30, flexWrap: "wrap", marginBottom: 30, overflowY: "scroll", paddingBottom: 10 }} className='flex packsGrid'>
+                <div id="packSelectContainer" style={{ width: "100%", height: "fit-content", maxHeight: "500", backgroundColor: "#fff", marginTop: 20, gap: 30, flexWrap: "wrap", marginBottom: 30, overflowY: "scroll", paddingBottom: 10 }} className='flex jcc packsGrid'>
                     <RenderPacksArray />
                 </div>
                 <div className='flex fdc aic jcc' style={{ gap: 10 }}>

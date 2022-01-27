@@ -200,15 +200,17 @@ export default function Game() {
                 return (
                     <Zoom>
                         <Container flex aic jcc full fdc>
-                            <h1>You've submitted your responce!</h1>
-                            <br />
-                            <h5>Wait for the others to finish</h5>
+                            <div style={{ textAlign: "center", lineHeight: 1 }}>
+                                <h1>You've submitted your responce!</h1>
+                                <br />
+                                <h5>Wait for the others to finish</h5>
+                            </div>
                         </Container>
                     </Zoom>
                 )
             } else {
                 return (
-                    <div className="flex aic jcsb fdc" style={{ height: "100%", gap: 20 }}>
+                    <div className="flex aic jcsb fdc" id="answerSubmitFullContainer" style={{ height: "100%", gap: 20 }}>
                         <div>
                             <PromptComponent disableRefresh />
                         </div>
@@ -236,7 +238,7 @@ export default function Game() {
                                 }
                             }}>Submit</Button>
                         </div>
-                        <div>
+                        <div id="answerSubmitPlayersLobby">
                             <Players />
                         </div>
                     </div>
@@ -256,7 +258,7 @@ export default function Game() {
                 <Zoom duration={500}>
                     <Container flex aic jcc fdc>
                         <Tada delay={1500}>
-                            <h1>It's time for the next round. Strap in!</h1>
+                            <h1 style={{ textAlign: "center", lineHeight: 1 }}>It's time for the next round. Strap in!</h1>
                         </Tada>
                     </Container>
                 </Zoom>

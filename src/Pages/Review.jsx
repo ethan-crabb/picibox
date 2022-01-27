@@ -196,7 +196,7 @@ export default function Review(props) {
             //     {playerArray}
             // </div>
             // <div style={{ opacity: `${props.disabled ? .5 : 1}` }}>
-            <Lobby disabledReason={localProps.disabled ? (reviewData[round].answers[answer].id === socket.id ? "You wrote this one 🔒" : "You've voted 🔒") : null} disabled={localProps.disabled} lobby={lobby} onClick={(i) => {
+            <Lobby wrap overflow={true} disabledReason={localProps.disabled ? (reviewData[round].answers[answer].id === socket.id ? "You wrote this one 🔒" : "You've voted 🔒") : null} disabled={localProps.disabled} lobby={lobby} onClick={(i) => {
                 if (!localProps.disabled) {
                     setVoted(true)
                     socket.emit("vote-player", {
@@ -247,7 +247,7 @@ export default function Review(props) {
                     <Zoom duration={500}>
                         <Container flex aic jcc fdc>
                             <Tada delay={1500}>
-                                <h1>It's time to review your answers!</h1>
+                                <h1 style={{ textAlign: "center", lineHeight: 1 }}>It's time to review your answers!</h1>
                             </Tada>
                         </Container>
                     </Zoom>
@@ -263,9 +263,6 @@ export default function Review(props) {
                                 fontSize: 30
                             }} className='flex aic jcc fdc'>
                                 {votesRecceived}/{props.lobby.length - 1}
-                                {/* <span style={{ fontSize: 10, lineHeight: 2, maxWidth: 90 }}>
-                                    votes recceived
-                                </span> */}
                             </div>
                             <h3 style={{ fontSize: 25, color: "#000", textShadow: "0px 3px 0px #00B2FF" }}>{reviewData[round].answers[answer].id === socket.id ? "You wrote this one" : "Who wrote this?"}</h3>
                             <br />
