@@ -97,7 +97,7 @@ function App() {
                     <GameContext.Provider value={game}>
                         <Modal />
                         <div className='full flex aic jcc'>
-                            <div style={{ width: 1024, height: 650 }} id="mainContent" className="flex aic jcc">
+                            <main style={{ width: 1024, height: 650 }} id="mainContent" className="flex aic jcc">
                                 <Router>
                                     <ToastContainer
                                         position="bottom-center"
@@ -120,7 +120,7 @@ function App() {
                                         <Route path="/create-pack" element={<CreatePack />} />
                                     </Routes>
                                 </Router>
-                            </div>
+                            </main>
                         </div>
                     </GameContext.Provider>
                 </ModalContext.Provider>
